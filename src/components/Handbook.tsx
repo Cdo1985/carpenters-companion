@@ -42,6 +42,13 @@ const Handbook = () => {
     { title: 'Sound Insulation', detail: 'Use Studco Resilient Mounts (M237R) to isolate framing from structure.' },
   ];
 
+  const timberData = [
+    { type: 'Stud spacing (max)', single: '600mm', double: '450mm', unit: 'mm' },
+    { type: 'Noggins (max)', vertical: '1350mm', notes: 'AS 1684.2', unit: 'mm' },
+    { type: 'Wall framing fixes', method: '2 / 75 x 3.05mm', notes: 'Hand or machine driven', unit: '' },
+    { type: 'Truss fixing', method: 'Truss grips / Triple grips', notes: 'Refer to truss layout', unit: '' },
+  ];
+
   return (
     <div className="handbook">
       <div className="flex gap-2" style={{ marginBottom: '1rem', overflowX: 'auto', paddingBottom: '0.5rem', whiteSpace: 'nowrap' }}>
