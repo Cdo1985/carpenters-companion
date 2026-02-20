@@ -318,11 +318,24 @@ const Handbook = () => {
       {activeTab === 'commercial' && (
         <div className="card">
           <h3>Commercial Installation Guides</h3>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: '1rem' }}>
+            Official Rondo & Gyprock commercial system guides.
+          </p>
           <div className="column flex gap-4">
             {commercialGuides.map((guide, i) => (
               <div key={i} style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
                 <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>{guide.title}</h4>
-                <p style={{ fontSize: '0.85rem', margin: 0, color: 'var(--text-main)' }}>{guide.detail}</p>
+                <p style={{ fontSize: '0.85rem', margin: '0 0 10px 0', color: 'var(--text-main)' }}>{guide.detail}</p>
+                {guide.title === 'Bulkheads' && (
+                  <a 
+                    href="https://www.rondo.com.au/media/3117/bulkhead-installation-guide.pdf" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.75rem', color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold' }}
+                  >
+                    View Bulkhead Guide →
+                  </a>
+                )}
               </div>
             ))}
           </div>
@@ -331,9 +344,19 @@ const Handbook = () => {
 
       {activeTab === 'redbook' && (
         <div className="card">
-          <div className="flex items-center gap-2" style={{ marginBottom: '1rem' }}>
-            <Book size={24} color="var(--primary)" />
-            <h3 style={{ margin: 0 }}>Gyprock Red Book Companion</h3>
+          <div className="flex items-center justify-between" style={{ marginBottom: '1rem' }}>
+            <div className="flex items-center gap-2">
+              <Book size={24} color="var(--primary)" />
+              <h3 style={{ margin: 0 }}>Gyprock Red Book Companion</h3>
+            </div>
+            <a 
+              href="https://www.gyprock.com.au/redbook" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ fontSize: '0.75rem', color: 'var(--accent)', textDecoration: 'underline' }}
+            >
+              Official Red Book Site
+            </a>
           </div>
           
           <div className="column gap-4 flex">
@@ -392,7 +415,17 @@ const Handbook = () => {
 
             {/* Commercial Guide Section */}
             <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
-              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Book 3: Commercial Guide</h4>
+              <div className="flex justify-between items-center">
+                <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Book 3: Commercial Installation</h4>
+                <a 
+                  href="https://www.gyprock.com.au/resources?document_types=installation-guide&tags=commercial" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.7rem', color: 'var(--primary)' }}
+                >
+                  Download Book 3 PDF
+                </a>
+              </div>
               <div className="column gap-2 flex">
                 <div style={{ fontSize: '0.85rem' }}>
                   <span className="badge badge-studco">Steel Studs</span>
@@ -414,9 +447,19 @@ const Handbook = () => {
 
       {activeTab === 'specs' && (
         <div className="card">
-          <div className="flex items-center gap-2" style={{ marginBottom: '1rem' }}>
-            <Zap size={24} color="var(--primary)" />
-            <h3 style={{ margin: 0 }}>System Specification Templates</h3>
+          <div className="flex items-center justify-between" style={{ marginBottom: '1rem' }}>
+            <div className="flex items-center gap-2">
+              <Zap size={24} color="var(--primary)" />
+              <h3 style={{ margin: 0 }}>System Specification Templates</h3>
+            </div>
+            <a 
+              href="https://www.gyprock.com.au/resources?document_types=specification-template" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ fontSize: '0.75rem', color: 'var(--accent)', textDecoration: 'underline' }}
+            >
+              Get Official Specs
+            </a>
           </div>
           
           <div className="column gap-4 flex">
@@ -528,6 +571,39 @@ const Handbook = () => {
                 {['AFFL (Above FFL)', 'CLR (Clearance)', 'DP (Downpipe)', 'EF (Exhaust Fan)', 'GPO (Power Outlet)', 'NTS (Not to Scale)', 'U/S (Underside)', 'UNO (Unless Noted Otherwise)'].map((abbr, i) => (
                   <span key={i} style={{ background: '#333', padding: '4px 8px', borderRadius: '4px', fontSize: '0.75rem' }}>{abbr}</span>
                 ))}
+              </div>
+            </div>
+
+            {/* Level Math Section */}
+            <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px', borderLeft: '4px solid var(--primary)' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>Level Math: RL vs FFL</h4>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '10px' }}>
+                How to figure out heights on site using Reduced Levels (RL) and Finished Floor Levels (FFL).
+              </p>
+              
+              <div className="column gap-3 flex">
+                <div style={{ background: '#000', padding: '10px', borderRadius: '6px' }}>
+                  <strong style={{ fontSize: '0.8rem', color: 'var(--accent)' }}>The Formula:</strong>
+                  <div style={{ fontSize: '0.9rem', margin: '5px 0', fontFamily: 'monospace' }}>
+                    Actual Height = RL (Current) - RL (Datum)
+                  </div>
+                  <div style={{ fontSize: '0.9rem', fontFamily: 'monospace' }}>
+                    Cut/Fill = FFL (Target) - RL (Existing)
+                  </div>
+                </div>
+
+                <div style={{ fontSize: '0.8rem' }}>
+                  <strong>Height of Instrument (HI) Method:</strong>
+                  <ol style={{ margin: '5px 0', paddingLeft: '1.2rem' }}>
+                    <li>Take reading on known Benchmark (BM).</li>
+                    <li>HI = RL (of BM) + Reading.</li>
+                    <li>RL (of target) = HI - Reading on target.</li>
+                  </ol>
+                </div>
+
+                <div style={{ fontSize: '0.8rem', fontStyle: 'italic', color: 'var(--text-muted)' }}>
+                  Tip: Most Melbourne sites use AHD (Mean Sea Level) as the RL datum.
+                </div>
               </div>
             </div>
 
