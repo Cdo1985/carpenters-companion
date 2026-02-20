@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Book, Shield, Zap } from 'lucide-react';
+import { Book, Shield, Zap, MapPin } from 'lucide-react';
 
 const Handbook = () => {
   const [activeTab, setActiveTab] = useState<'timber' | 'steel' | 'plaster' | 'cornice' | 'commercial' | 'redbook' | 'specs' | 'drawings' | 'general'>('timber');
 
   const plasterData = [
-    { type: 'Standard 10/13mm', use: 'General Walls/Ceilings', notes: 'Standard residential lining' },
-    { type: 'Aquachek™ (Blue)', use: 'Wet Areas', notes: 'Moisture resistant core & liner' },
-    { type: 'Fyrchek™ (Pink)', use: 'Fire Rated Walls', notes: 'Glass fibre reinforced core' },
-    { type: 'Impactchek™', use: 'High Traffic', notes: 'Reinforced for impact resistance' },
-    { type: 'EC08™ Complete', use: 'Premium/Hospital', notes: 'Highest level impact, fire & moisture' },
-    { type: 'Shaft Liner MP', use: 'Elevator Shafts', notes: 'Moisture/mould protected' },
-    { type: 'Perforated (Gyptone/Rigitone)', use: 'Acoustic Ceilings', notes: 'Hexagon/Square/Round patterns' },
+    { type: 'Standard 10/13mm', use: 'General Walls/Ceilings', screwSpacing: '300mm edges / 600mm field', notes: 'Standard residential lining' },
+    { type: 'Aquachek™ (Blue)', use: 'Wet Areas', screwSpacing: '200mm edges / 300mm field', notes: 'Moisture resistant core & liner' },
+    { type: 'Fyrchek™ (Pink)', use: 'Fire Rated Walls', screwSpacing: '200mm centers', notes: 'Glass fibre reinforced core' },
+    { type: 'Impactchek™', use: 'High Traffic', screwSpacing: '200mm centers', notes: 'Reinforced for impact resistance' },
+    { type: 'EC08™ Complete', use: 'Premium/Hospital', screwSpacing: '200mm centers', notes: 'Highest level impact, fire & moisture' },
+    { type: 'Shaft Liner MP', use: 'Elevator Shafts', screwSpacing: 'N/A (Friction Fit)', notes: 'Moisture/mould protected' },
+    { type: 'Perforated (Gyptone/Rigitone)', use: 'Acoustic Ceilings', screwSpacing: 'Per perimeter / specialized', notes: 'Hexagon/Square/Round patterns' },
   ];
 
   const adhesiveData = [
