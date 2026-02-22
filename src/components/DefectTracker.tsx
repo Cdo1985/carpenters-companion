@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AlertTriangle, CheckSquare, Trash2, Info, Zap, MapPin, Flag, ChevronDown, ChevronUp } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { AlertTriangle, CheckSquare, Trash2, Info, Zap, MapPin, Flag, ChevronDown, ChevronUp, Camera } from 'lucide-react';
 
 interface Defect {
   id: number;
@@ -9,6 +9,7 @@ interface Defect {
   priority: 'Low' | 'Medium' | 'High';
   resolved: boolean;
   category: string;
+  image?: string;
 }
 
 const DefectTracker = () => {
@@ -25,8 +26,22 @@ const DefectTracker = () => {
     issue: '',
     location: '',
     priority: 'Medium' as 'Low' | 'Medium' | 'High',
-    category: 'General'
+    category: 'General',
+    image: undefined as string | undefined
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, image: reader.result as string }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const toggleDefect = (id: number) => {
     setDefects(defects.map(d => d.id === id ? { ...d, resolved: !d.resolved } : d));
@@ -44,7 +59,8 @@ const DefectTracker = () => {
       resolved: false
     };
     setDefects([newDefect, ...defects]);
-    setFormData({ trade: '', issue: '', location: '', priority: 'Medium', category: 'General' });
+    setFormData({ trade: '', issue: '', location: '', priority: 'Medium' as 'Low' | 'Medium' | 'High', category: 'General', image: undefined });
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const addTemplate = (template: any) => {
@@ -165,6 +181,9 @@ const DefectTracker = () => {
                   }}>
                     {d.issue}
                   </span>
+                  {d.image && (
+                    <img src={d.image} alt="Defect" style={{ width: '100%', height: '150px', objectFit: 'cover', borderRadius: '8px', marginTop: '8px' }} />
+                  )}
                   <div className="flex items-center gap-1" style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
                     <MapPin size={12} /> {d.location || 'Not Specified'}
                   </div>
@@ -240,6 +259,27 @@ const DefectTracker = () => {
               placeholder="Describe the issue impacting your work..." 
               rows={3} 
             />
+          </div>
+
+          <div className="form-group">
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleFileChange} 
+              accept="image/*" 
+              style={{ display: 'none' }} 
+            />
+            <button 
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              style={{ background: '#333', color: 'white', padding: '10px', width: '100%', borderRadius: '6px', marginBottom: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
+            >
+              <Camera size={20} />
+              {formData.image ? 'Image Attached' : 'Attach Photo of Defect'}
+            </button>
+            {formData.image && (
+              <img src={formData.image} alt="Preview" style={{ width: '100%', height: '100px', objectFit: 'cover', borderRadius: '6px', marginBottom: '10px' }} />
+            )}
           </div>
           
           <button 

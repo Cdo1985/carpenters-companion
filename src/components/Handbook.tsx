@@ -322,6 +322,18 @@ const Handbook = () => {
             Official Rondo & Gyprock commercial system guides.
           </p>
           <div className="column flex gap-4">
+            <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px', borderLeft: '4px solid var(--primary)' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>Commercial & Industrial Wall Systems</h4>
+              <p style={{ fontSize: '0.85rem', margin: '0 0 10px 0', color: 'var(--text-main)' }}>Installation guide for high-performance commercial wall systems.</p>
+              <a 
+                href="/Commercial_Wall_Systems_Installation_Guide.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ fontSize: '0.75rem', color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold' }}
+              >
+                View Full Guide (PDF) →
+              </a>
+            </div>
             {commercialGuides.map((guide, i) => (
               <div key={i} style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
                 <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>{guide.title}</h4>
@@ -362,7 +374,17 @@ const Handbook = () => {
           <div className="column gap-4 flex">
             {/* Design Guide Section */}
             <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
-              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Book 1: Design Guide</h4>
+              <div className="flex justify-between items-center">
+                <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Book 1: Design Guide</h4>
+                <a 
+                  href="/GYP500_THE_RED_BOOK_1_Design_Guide.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.7rem', color: 'var(--primary)', textDecoration: 'none' }}
+                >
+                  Download PDF →
+                </a>
+              </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Key performance metrics for system selection.</p>
               
               <div style={{ marginTop: '0.5rem' }}>
@@ -418,12 +440,12 @@ const Handbook = () => {
               <div className="flex justify-between items-center">
                 <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Book 3: Commercial Installation</h4>
                 <a 
-                  href="https://www.gyprock.com.au/resources?document_types=installation-guide&tags=commercial" 
+                  href="/Commercial_Wall_Systems_Installation_Guide.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  style={{ fontSize: '0.7rem', color: 'var(--primary)' }}
+                  style={{ fontSize: '0.7rem', color: 'var(--primary)', textDecoration: 'none' }}
                 >
-                  Download Book 3 PDF
+                  Download Book 3 PDF →
                 </a>
               </div>
               <div className="column gap-2 flex">
