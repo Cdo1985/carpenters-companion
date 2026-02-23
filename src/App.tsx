@@ -28,7 +28,7 @@ function App() {
           </h2>
         </div>
         <div style={{ background: 'var(--primary)', color: '#000', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 'bold' }}>
-          AUS v1.0
+          CDO
         </div>
       </header>
 
