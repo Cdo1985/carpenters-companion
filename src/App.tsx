@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Book, Calculator, AlertCircle, Menu } from 'lucide-react';
+import { Book, Calculator, AlertCircle, Menu, CheckCircle } from 'lucide-react';
 import Handbook from './components/Handbook';
 import Estimator from './components/Estimator';
 import DefectTracker from './components/DefectTracker';
+import Compliance from './components/Compliance';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'handbook' | 'estimator' | 'defects'>('handbook');
+  const [activeTab, setActiveTab] = useState<'handbook' | 'estimator' | 'defects' | 'compliance'>('handbook');
 
   return (
     <div className="app-container">
@@ -35,6 +36,7 @@ function App() {
         {activeTab === 'handbook' && <Handbook />}
         {activeTab === 'estimator' && <Estimator />}
         {activeTab === 'defects' && <DefectTracker />}
+        {activeTab === 'compliance' && <Compliance />}
       </main>
 
       <nav>
@@ -58,6 +60,13 @@ function App() {
         >
           <AlertCircle size={24} />
           <span>Defects</span>
+        </button>
+        <button 
+          className={`nav-item ${activeTab === 'compliance' ? 'active' : ''}`} 
+          onClick={() => setActiveTab('compliance')}
+        >
+          <CheckCircle size={24} />
+          <span>Compliance</span>
         </button>
       </nav>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { AlertTriangle, CheckSquare, Trash2, Info, Zap, MapPin, Flag, ChevronDown, ChevronUp, Camera } from 'lucide-react';
 
 interface Defect {
@@ -12,32 +12,77 @@ interface Defect {
   image?: string;
 }
 
-const DefectTracker = () => {
-  const [defects, setDefects] = useState<Defect[]>([
-    { id: 1, trade: 'Concreter', issue: 'Slab out of level (> 5mm over 3m)', location: 'Garage', priority: 'High', resolved: false, category: 'Structural' },
-    { id: 2, trade: 'Plumber', issue: 'Pipes through structural studs (noggin needed)', location: 'Ensuite', priority: 'Medium', resolved: false, category: 'Rough-in' },
-    { id: 3, trade: 'Sparky', issue: 'Holes too large in top plate', location: 'Kitchen', priority: 'Medium', resolved: false, category: 'Rough-in' },
-    { id: 4, trade: 'Site Mgr', issue: 'Wrong timber delivery (F7 vs MGP10)', location: 'Site Front', priority: 'High', resolved: false, category: 'Materials' },
-  ]);
+interface DefectForm {
+  trade: string;
+  issue: string;
+  location: string;
+  priority: 'Low' | 'Medium' | 'High';
+  category: string;
+  image?: string;
+}
 
-  const [showTips, setShowTips] = useState(false);
-  const [formData, setFormData] = useState({
-    trade: '',
-    issue: '',
-    location: '',
-    priority: 'Medium' as 'Low' | 'Medium' | 'High',
-    category: 'General',
-    image: undefined as string | undefined
+const DefectTracker = () => {
+  const [defects, setDefects] = useState<Defect[]>(() => {
+    const saved = localStorage.getItem('carpenters-defects');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error("Failed to parse defects from localStorage", e);
+      }
+    }
+    return [
+      { id: 1, trade: 'Concreter', issue: 'Slab out of level (> 5mm over 3m)', location: 'Garage', priority: 'High', resolved: false, category: 'Structural' },
+      { id: 2, trade: 'Plumber', issue: 'Pipes through structural studs (noggin needed)', location: 'Ensuite', priority: 'Medium', resolved: false, category: 'Rough-in' },
+      { id: 3, trade: 'Sparky', issue: 'Holes too large in top plate', location: 'Kitchen', priority: 'Medium', resolved: false, category: 'Rough-in' },
+      { id: 4, trade: 'Site Mgr', issue: 'Wrong timber delivery (F7 vs MGP10)', location: 'Site Front', priority: 'High', resolved: false, category: 'Materials' },
+    ];
+  });
+
+  const [showTips, setShowTips] = useState(() => {
+    return localStorage.getItem('carpenters-defects-showTips') === 'true';
+  });
+
+  const [formData, setFormData] = useState<DefectForm>(() => {
+    const saved = localStorage.getItem('carpenters-defects-form');
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        return parsed;
+      } catch (e) {
+        console.error("Failed to parse form from localStorage", e);
+      }
+    }
+    return {
+      trade: '',
+      issue: '',
+      location: '',
+      priority: 'Medium',
+      category: 'General',
+      image: undefined
+    };
   });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    localStorage.setItem('carpenters-defects', JSON.stringify(defects));
+  }, [defects]);
+
+  useEffect(() => {
+    localStorage.setItem('carpenters-defects-form', JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
+    localStorage.setItem('carpenters-defects-showTips', String(showTips));
+  }, [showTips]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, image: reader.result as string }));
+        setFormData((prev: DefectForm) => ({ ...prev, image: reader.result as string }));
       };
       reader.readAsDataURL(file);
     }

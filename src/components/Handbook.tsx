@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
-import { Book, Shield, Zap, MapPin } from 'lucide-react';
+import { Book, Shield, Zap, MapPin, Calculator } from 'lucide-react';
 
 const Handbook = () => {
-  const [activeTab, setActiveTab] = useState<'timber' | 'steel' | 'plaster' | 'cornice' | 'commercial' | 'redbook' | 'specs' | 'drawings' | 'general'>('timber');
+  const [activeTab, setActiveTab] = useState<'timber' | 'steel' | 'plaster' | 'cornice' | 'commercial' | 'redbook' | 'specs' | 'drawings' | 'math' | 'caulking' | 'general'>('timber');
+
+  const caulkingData = [
+    { type: 'Fire Mastic (e.g., CSR FireSeal)', use: 'Fire-Rated Walls (FRL)', notes: 'Essential to maintain FRL integrity. Non-combustible.' },
+    { type: 'Acoustic Sealant', use: 'Sound Isolation', notes: 'Used at head and base tracks to reduce flanking noise.' },
+    { type: 'Sanitary Silicone', use: 'Wet Areas / Bathrooms', notes: 'Mould resistant. Use for junctions in tiled areas.' },
+    { type: 'Polyurethane (Sikaflex 11FC)', use: 'Expansion Joints', notes: 'High flexibility and bond strength. Exterior/Interior.' },
+    { type: 'Gap Filler (Acrylic)', use: 'Internal Architraves/Skirting', notes: 'Paintable. Not for high-movement joints.' },
+  ];
 
   const plasterData = [
     { type: 'Standard 10/13mm', use: 'General Walls/Ceilings', screwSpacing: '300mm edges / 600mm field', notes: 'Standard residential lining' },
@@ -32,14 +40,16 @@ const Handbook = () => {
     { item: '64mm C-Stud 0.50 BMT', height: '2700mm', spacing: '600mm', brand: 'Rondo/Studco' },
     { item: '64mm C-Stud 0.75 BMT', height: '3200mm', spacing: '600mm', brand: 'Rondo/Studco' },
     { item: '92mm C-Stud 0.75 BMT', height: '4500mm', spacing: '600mm', brand: 'Rondo/Studco' },
-    { item: 'Tracks (Top/Bottom)', type: 'Deflection / Standard', brand: 'Rondo/Studco' },
+    { item: '150mm C-Stud 1.15 BMT', height: '6500mm+', spacing: '600mm', brand: 'Rondo/Studco' },
+    { item: 'Deflection Tracks (Slotted)', type: 'Vertical movement', brand: 'Rondo/Studco' },
+    { item: 'Husk Bolts / DynaBolts', type: 'Bottom track fixing', brand: 'Ramset/Hilti' },
   ];
 
   const commercialGuides = [
     { title: 'Bulkheads', detail: 'Use Rondo DUO or KEY-LOCK for complex shapes. Ensure hangers @ 1200mm centers.' },
-    { title: 'Seismic Joints', detail: 'Required every 9-12m in long walls. Use specialized seismic clips for head tracks.' },
-    { title: 'Fire-Rated Walls', detail: 'Ensure 16mm Fire-rated plasterboard with 10mm gap at top for deflection tracks.' },
-    { title: 'Sound Insulation', detail: 'Use Studco Resilient Mounts (M237R) to isolate framing from structure.' },
+    { title: 'Seismic Design', detail: 'Refer to AS 1170.4. Specialized seismic head tracks and clips (e.g., Rondo Seismic Slotted Track) allow lateral movement while maintaining structural integrity.' },
+    { title: 'Fire-Rated Walls (FRL)', detail: 'FRL 60/60/60 requires 16mm Fire-rated board. Use deflection tracks with 15-20mm gap at top. Seal all penetrations with fire-rated pillows or mastic.' },
+    { title: 'Acoustic / Seismic Seals', detail: 'Use Studco Resilient Mounts (M237R) and ensure seismic joints every 9m in long partitions.' },
   ];
 
   const timberData = [
@@ -119,6 +129,28 @@ const Handbook = () => {
           Red Book
         </button>
         <button 
+          onClick={() => setActiveTab('math')} 
+          style={{ 
+            background: activeTab === 'math' ? 'var(--primary)' : '#333',
+            color: activeTab === 'math' ? '#000' : 'white',
+            padding: '8px 16px',
+            borderRadius: '20px',
+            flexShrink: 0
+          }}>
+          Construction Math
+        </button>
+        <button 
+          onClick={() => setActiveTab('caulking')} 
+          style={{ 
+            background: activeTab === 'caulking' ? 'var(--primary)' : '#333',
+            color: activeTab === 'caulking' ? '#000' : 'white',
+            padding: '8px 16px',
+            borderRadius: '20px',
+            flexShrink: 0
+          }}>
+          Caulking
+        </button>
+        <button 
           onClick={() => setActiveTab('specs')} 
           style={{ 
             background: activeTab === 'specs' ? 'var(--primary)' : '#333',
@@ -189,13 +221,13 @@ const Handbook = () => {
       {activeTab === 'steel' && (
         <div className="card">
           <h3>Rondo & Studco Steel Systems</h3>
-          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Commercial wall and ceiling specifications.</p>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Commercial wall and ceiling specifications (&gt;30 variants available).</p>
           <table className="table">
             <thead>
               <tr>
                 <th>Component</th>
-                <th>Max Height</th>
-                <th>Spacing</th>
+                <th>Detail/Max Height</th>
+                <th>Spacing/Type</th>
               </tr>
             </thead>
             <tbody>
@@ -208,8 +240,8 @@ const Handbook = () => {
                       <span className="badge badge-studco" style={{ marginLeft: '4px' }}>Studco</span>
                     </div>
                   </td>
-                  <td>{d.height || 'N/A'}</td>
-                  <td>{d.spacing || d.type}</td>
+                  <td>{d.height || d.type}</td>
+                  <td>{d.spacing || d.brand}</td>
                 </tr>
               ))}
             </tbody>
@@ -219,7 +251,7 @@ const Handbook = () => {
               <Zap size={16} color="var(--primary)" /> Steel Rule
             </h4>
             <p style={{ fontSize: '0.85rem', margin: 0 }}>
-              Ensure tracks are fixed at 600mm centers max. Use 0.75 BMT for heights over 2.7m.
+              Ensure tracks are fixed with Husk Bolts or DynaBolts at 600mm centers max. Use Slotted Tracks for deflection in fire-rated/seismic applications.
             </p>
           </div>
         </div>
@@ -325,14 +357,24 @@ const Handbook = () => {
             <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px', borderLeft: '4px solid var(--primary)' }}>
               <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--primary)' }}>Commercial & Industrial Wall Systems</h4>
               <p style={{ fontSize: '0.85rem', margin: '0 0 10px 0', color: 'var(--text-main)' }}>Installation guide for high-performance commercial wall systems.</p>
-              <a 
-                href="/Commercial_Wall_Systems_Installation_Guide.pdf" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                style={{ fontSize: '0.75rem', color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold' }}
-              >
-                View Full Guide (PDF) →
-              </a>
+              <div className="flex gap-2">
+                <a 
+                  href="/Commercial_Wall_Systems_Installation_Guide.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.75rem', color: 'var(--primary)', textDecoration: 'none', fontWeight: 'bold' }}
+                >
+                  View Full Guide (PDF) →
+                </a>
+                <a 
+                  href="https://www.rondo.com.au/media/3112/seismic-design-guide.pdf" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.75rem', color: 'var(--accent)', textDecoration: 'none', fontWeight: 'bold' }}
+                >
+                  Seismic Guide →
+                </a>
+              </div>
             </div>
             {commercialGuides.map((guide, i) => (
               <div key={i} style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
@@ -348,8 +390,87 @@ const Handbook = () => {
                     View Bulkhead Guide →
                   </a>
                 )}
+                {guide.title === 'Fire-Rated Walls (FRL)' && (
+                  <a 
+                    href="https://www.gyprock.com.au/resources/design-guides/the-red-book" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    style={{ fontSize: '0.75rem', color: 'var(--danger)', textDecoration: 'none', fontWeight: 'bold' }}
+                  >
+                    Fire-Rated System Selector →
+                  </a>
+                )}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'math' && (
+        <div className="card">
+          <div className="flex items-center gap-2" style={{ marginBottom: '1rem' }}>
+            <Calculator size={24} color="var(--primary)" />
+            <h3 style={{ margin: 0 }}>Construction Math & Hacks</h3>
+          </div>
+          
+          <div className="column gap-4 flex">
+            {/* 3-4-5 Trick */}
+            <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px', borderLeft: '4px solid var(--success)' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--success)' }}>The 3-4-5 Square Rule</h4>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Perfectly square any wall or corner without a framing square.</p>
+              <div style={{ background: '#000', padding: '10px', borderRadius: '6px', marginTop: '10px' }}>
+                <ol style={{ fontSize: '0.85rem', margin: 0, paddingLeft: '1.2rem' }}>
+                  <li>Measure 3 units from the corner along one wall.</li>
+                  <li>Measure 4 units from the corner along the other wall.</li>
+                  <li>Adjust the walls until the distance between the two marks is exactly <strong>5 units</strong>.</li>
+                </ol>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+                  Works with any multiple: 600-800-1000, 1.2-1.6-2.0, etc.
+                </div>
+              </div>
+            </div>
+
+            {/* Top Hats Do's & Don'ts */}
+            <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px', borderLeft: '4px solid var(--accent)' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Top Hats: Do's & Don'ts</h4>
+              <div className="flex column gap-3">
+                <div style={{ background: 'rgba(34, 197, 94, 0.1)', padding: '8px', borderRadius: '4px' }}>
+                  <strong style={{ fontSize: '0.8rem', color: 'var(--success)' }}>DO:</strong>
+                  <ul style={{ fontSize: '0.75rem', margin: '4px 0 0 0', paddingLeft: '1.2rem' }}>
+                    <li>Check if building is in a high-corrosion zone (near ocean) - use Galvanized or Stainless Top Hats.</li>
+                    <li>Ensure fixings are compatible (don't mix metals).</li>
+                    <li>Fix at every stud/purlin crossing.</li>
+                  </ul>
+                </div>
+                <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '8px', borderRadius: '4px' }}>
+                  <strong style={{ fontSize: '0.8rem', color: 'var(--danger)' }}>DON'T:</strong>
+                  <ul style={{ fontSize: '0.75rem', margin: '4px 0 0 0', paddingLeft: '1.2rem' }}>
+                    <li>Don't bridge across movement joints in the primary structure.</li>
+                    <li>Don't use under-sized fixings for heavy cladding (e.g., CFC sheets).</li>
+                    <li>Don't allow debris to sit in the "hat" section - can lead to rust.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Area Calculations */}
+            <div style={{ padding: '1rem', border: '1px solid #444', borderRadius: '8px' }}>
+              <h4 style={{ margin: '0 0 0.5rem 0', color: 'var(--accent)' }}>Quick Area Formulas</h4>
+              <div className="column gap-2 flex" style={{ fontSize: '0.85rem' }}>
+                <div className="flex justify-between">
+                  <span>Rectangle (Wall/Ceiling)</span>
+                  <span style={{ fontFamily: 'monospace' }}>L x W</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Triangle (Gable)</span>
+                  <span style={{ fontFamily: 'monospace' }}>(Base x Height) / 2</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Circle (Columns)</span>
+                  <span style={{ fontFamily: 'monospace' }}>π x r²</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -638,6 +759,39 @@ const Handbook = () => {
                 <span style={{ color: 'var(--danger)' }}>WARNING:</span> Printing a PDF at "Fit to Page" will destroy the scale. Always use the scale bar for verification.
               </p>
             </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === 'caulking' && (
+        <div className="card">
+          <h3>Caulking & Sealant Application Guide</h3>
+          <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Best practices for specific site tasks and fire compliance.</p>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Product Type</th>
+                <th>Primary Use</th>
+                <th>Key Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              {caulkingData.map((d, i) => (
+                <tr key={i}>
+                  <td>{d.type}</td>
+                  <td>{d.use}</td>
+                  <td style={{ fontSize: '0.75rem' }}>{d.notes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div style={{ marginTop: '1rem', padding: '1rem', background: '#33333333', borderRadius: '8px' }}>
+            <h4 style={{ margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Zap size={16} color="var(--primary)" /> Pro Tip
+            </h4>
+            <p style={{ fontSize: '0.85rem', margin: 0 }}>
+              For fire-rated walls, always use fire-rated mastic (e.g., FireSeal) and ensure the depth of the joint is equal to or greater than the width for maximum performance.
+            </p>
           </div>
         </div>
       )}
