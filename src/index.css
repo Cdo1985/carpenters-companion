@@ -1,10 +1,10 @@
 :root {
-  --primary: #f59e0b; /* Safety Orange */
+  --primary: #f05f05; /* Safety Orange */
   --bg-main: #121212;
   --bg-card: #1e1e1e;
   --bg-input: #2d2d2d;
   --text-main: #e2e8f0;
-  --text-muted: #22dd22;
+  --text-muted: #59c977;
   --accent: #3b82f6;
   --danger: #ef4444;
   --success: #22c55e;
