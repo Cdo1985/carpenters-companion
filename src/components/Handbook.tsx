@@ -1,6 +1,16 @@
 import React, { useState } from 'react';
 import { Book, Shield, Zap, MapPin, Calculator } from 'lucide-react';
 
+interface SteelProduct {
+  item: string;
+  height?: string;
+  spacing?: string;
+  brand?: string;
+  type?: string;
+  notes?: string;
+  price?: string;
+}
+
 const Handbook = () => {
   const [activeTab, setActiveTab] = useState<'timber' | 'steel' | 'plaster' | 'cornice' | 'commercial' | 'redbook' | 'specs' | 'drawings' | 'math' | 'caulking' | 'general'>('timber');
 
@@ -39,17 +49,23 @@ const Handbook = () => {
     { range: 'Inspiration', types: 'Alto™, Trio, Concerto™, Opera™, Tempo™, Symphony™' },
   ];
 
-  const steelData = [
-    { item: '64mm C-Stud 0.50 BMT', height: '2700mm', spacing: '600mm', brand: 'Rondo 401/112' },
-    { item: '76mm C-Stud 0.75 BMT', height: '4630mm', spacing: '600mm', brand: 'Rondo 493' },
-    { item: '92mm C-Stud 1.15 BMT', height: '7430mm', spacing: '600mm', brand: 'Rondo 681' },
-    { item: '150mm C-Stud 1.15 BMT', height: '14860mm', spacing: '600mm', brand: 'Rondo 691' },
-    { item: 'Quiet Stud® RQST', height: 'Acoustic Wall', brand: 'Rondo RQST75/92' },
-    { item: 'MAXIjamb® Stud', type: '1.20 BMT Heavy Duty', brand: 'Rondo 200/204' },
-    { item: 'Deflection Track (Slotted)', type: 'S497/S498/S499', brand: 'Rondo 0.70 BMT' },
-    { item: 'QUIET-TRACK®', type: 'Building Movement', notes: 'Metal-on-metal isolation' },
-    { item: 'Nogging Track', type: 'Double Punched', brand: 'Rondo 214/215/216' },
-    { item: 'Husk Bolts / DynaBolts', type: 'Bottom track fixing', brand: 'Ramset/Hilti' },
+  const steelData: SteelProduct[] = [
+    { item: '51mm C-Stud 0.50 BMT', height: '2400mm', brand: 'Rondo 401', price: '$' },
+    { item: '51mm C-Stud 0.75 BMT', height: '3000mm', brand: 'Rondo 489', price: '$$' },
+    { item: '64mm C-Stud 0.50 BMT', height: '2700mm', brand: 'Rondo 112', price: '$' },
+    { item: '64mm C-Stud 0.75 BMT', height: '3200mm', brand: 'Rondo 491', price: '$$' },
+    { item: '76mm C-Stud 0.75 BMT', height: '4630mm', brand: 'Rondo 493', price: '$$' },
+    { item: '92mm C-Stud 0.75 BMT', height: '4500mm', brand: 'Rondo 495', price: '$$' },
+    { item: '92mm C-Stud 1.15 BMT', height: '7430mm', brand: 'Rondo 681', price: '$$$' },
+    { item: '150mm C-Stud 0.75 BMT', height: '8240mm', brand: 'Rondo 511', price: '$$$' },
+    { item: '150mm C-Stud 1.15 BMT', height: '14860mm', brand: 'Rondo 691 (Heavy)', price: '$$$$' },
+    { item: '92mm MAXIjamb® 1.20 BMT', type: 'Heavy Duty Stud', brand: 'Rondo 200', price: '$$$$' },
+    { item: '150mm MAXIjamb® 1.20 BMT', type: 'Heavy Duty Stud', brand: 'Rondo 204', price: '$$$$$' },
+    { item: 'Wall Track (Non-Slotted)', type: '1.15 BMT Standard', brand: 'Rondo 680 (92mm)', price: '$$' },
+    { item: 'Wall Track (Non-Slotted)', type: '1.15 BMT Standard', brand: 'Rondo 690 (150mm)', price: '$$$' },
+    { item: 'Deflection Track (Slotted)', type: '0.70 BMT movement', brand: 'Rondo S497/S498', price: '$$$' },
+    { item: 'Quiet Stud® RQST', height: 'Acoustic Wall', brand: 'Rondo RQST75/92', price: '$$$' },
+    { item: 'QUIET-TRACK®', type: 'Building Movement', notes: 'Metal-on-metal isolation', price: '$$$$' },
   ];
 
   const commercialGuides = [
@@ -235,6 +251,7 @@ const Handbook = () => {
                 <th>Component</th>
                 <th>Detail/Max Height</th>
                 <th>Spacing/Type</th>
+                <th>Cost</th>
               </tr>
             </thead>
             <tbody>
@@ -248,7 +265,8 @@ const Handbook = () => {
                     </div>
                   </td>
                   <td>{d.height || d.type}</td>
-                  <td>{d.spacing || d.brand}</td>
+                  <td>{d.spacing || d.brand || d.notes}</td>
+                  <td style={{ fontWeight: 'bold', color: 'var(--success)' }}>{d.price}</td>
                 </tr>
               ))}
             </tbody>
