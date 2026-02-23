@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calculator, DollarSign, Hammer, Layers, Clipboard, Box, Wind } from 'lucide-react';
+import { Calculator, DollarSign, Hammer, Layers, Clipboard, Box, Wind, Printer, Mail } from 'lucide-react';
 
 const Estimator = () => {
   const [mode, setMode] = useState<'wall' | 'ceiling'>('wall');
@@ -74,6 +74,36 @@ const Estimator = () => {
 
   const totalLaborHours = framingLaborHours + sheetingLaborHours + trowelingLaborHours + insulationLabor + extrasLabor;
   const totalLaborCost = (totalLaborHours * rate) + extraCosts;
+
+  const handlePrint = () => {
+    window.print();
+  };
+
+  const handleEmail = () => {
+    const subject = `Quote for ${mode === 'wall' ? 'Wall' : 'Ceiling'} Works`;
+    const body = `
+Quote Details:
+--------------------------------
+Type: ${mode === 'wall' ? 'Wall' : 'Ceiling'}
+Dimensions: ${length}m x ${widthOrHeight}m
+Area: ${area.toFixed(2)} m2
+Material: ${material}
+Spacing: ${spacing * 1000}mm
+
+Framing: ${totalLM.toFixed(1)} LM
+${mode === 'ceiling' && includeMainBar ? `Main Bar: ${mainBarLM.toFixed(1)} LM (${hangersCount} hangers)\n` : ''}
+Insulation: ${insulationType}
+Plastering: ${includePlastering ? 'Yes' : 'No'} ${includePlastering ? `(${boardType})` : ''}
+Troweling: ${includeTroweling ? 'Yes' : 'No'}
+
+Labor Rate: $${rate}/hr
+Total Hours: ${totalLaborHours.toFixed(1)} hrs
+--------------------------------
+Estimated Cost: $${totalLaborCost.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+    `.trim();
+    
+    window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
 
   return (
     <div className="estimator">
@@ -318,6 +348,42 @@ const Estimator = () => {
             <p style={{ margin: '2px 0' }}>• Total Hours: {totalLaborHours.toFixed(1)} hrs</p>
             <p style={{ margin: '2px 0' }}>• Area: {area.toFixed(1)} m²</p>
             {includePlastering && <p style={{ margin: '2px 0' }}>• Boards: {boardsNeeded} ({boardType})</p>}
+          </div>
+
+          <div className="flex gap-2" style={{ marginTop: '1rem' }}>
+            <button 
+              onClick={handlePrint}
+              style={{ 
+                flex: 1, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                gap: '8px', 
+                background: '#333', 
+                color: 'white', 
+                padding: '10px', 
+                borderRadius: '6px' 
+              }}>
+              <Printer size={18} />
+              Print
+            </button>
+            <button 
+              onClick={handleEmail}
+              style={{ 
+                flex: 1, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                gap: '8px', 
+                background: 'var(--primary)', 
+                color: 'black', 
+                fontWeight: 'bold',
+                padding: '10px', 
+                borderRadius: '6px' 
+              }}>
+              <Mail size={18} />
+              Email Quote
+            </button>
           </div>
 
           <p style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center', marginTop: '1rem' }}>
