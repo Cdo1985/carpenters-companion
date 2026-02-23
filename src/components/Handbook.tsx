@@ -17,9 +17,12 @@ const Handbook = () => {
     { type: 'Aquachek™ (Blue)', use: 'Wet Areas', screwSpacing: '200mm edges / 300mm field', notes: 'Moisture resistant core & liner' },
     { type: 'Fyrchek™ (Pink)', use: 'Fire Rated Walls', screwSpacing: '200mm centers', notes: 'Glass fibre reinforced core' },
     { type: 'Impactchek™', use: 'High Traffic', screwSpacing: '200mm centers', notes: 'Reinforced for impact resistance' },
-    { type: 'EC08™ Complete', use: 'Premium/Hospital', screwSpacing: '200mm centers', notes: 'Highest level impact, fire & moisture' },
-    { type: 'Shaft Liner MP', use: 'Elevator Shafts', screwSpacing: 'N/A (Friction Fit)', notes: 'Moisture/mould protected' },
-    { type: 'Perforated (Gyptone/Rigitone)', use: 'Acoustic Ceilings', screwSpacing: 'Per perimeter / specialized', notes: 'Hexagon/Square/Round patterns' },
+    { type: 'Exangle® P01', use: '90° External Corner', notes: 'Perforated 30mm leg bead' },
+    { type: 'Exangle® P50', use: 'Shadowline Stopping', notes: '10mm recess for 10/13/16mm board' },
+    { type: 'Exangle® P12', use: 'Plaster Stopping', notes: 'For 10mm building board' },
+    { type: 'Exangle® P35', use: 'Expansion Joint', notes: 'For board thicknesses > 10mm' },
+    { type: 'Panther® SRAP', use: 'Sound Rated Access', notes: 'Rw 28-51 rated for NCC Part F5' },
+    { type: 'Panther® FRAP', use: 'Fire Rated Access', notes: '1hr & 2hr rated metal profile' },
   ];
 
   const adhesiveData = [
@@ -37,11 +40,15 @@ const Handbook = () => {
   ];
 
   const steelData = [
-    { item: '64mm C-Stud 0.50 BMT', height: '2700mm', spacing: '600mm', brand: 'Rondo/Studco' },
-    { item: '64mm C-Stud 0.75 BMT', height: '3200mm', spacing: '600mm', brand: 'Rondo/Studco' },
-    { item: '92mm C-Stud 0.75 BMT', height: '4500mm', spacing: '600mm', brand: 'Rondo/Studco' },
-    { item: '150mm C-Stud 1.15 BMT', height: '6500mm+', spacing: '600mm', brand: 'Rondo/Studco' },
-    { item: 'Deflection Tracks (Slotted)', type: 'Vertical movement', brand: 'Rondo/Studco' },
+    { item: '64mm C-Stud 0.50 BMT', height: '2700mm', spacing: '600mm', brand: 'Rondo 401/112' },
+    { item: '76mm C-Stud 0.75 BMT', height: '4630mm', spacing: '600mm', brand: 'Rondo 493' },
+    { item: '92mm C-Stud 1.15 BMT', height: '7430mm', spacing: '600mm', brand: 'Rondo 681' },
+    { item: '150mm C-Stud 1.15 BMT', height: '14860mm', spacing: '600mm', brand: 'Rondo 691' },
+    { item: 'Quiet Stud® RQST', height: 'Acoustic Wall', brand: 'Rondo RQST75/92' },
+    { item: 'MAXIjamb® Stud', type: '1.20 BMT Heavy Duty', brand: 'Rondo 200/204' },
+    { item: 'Deflection Track (Slotted)', type: 'S497/S498/S499', brand: 'Rondo 0.70 BMT' },
+    { item: 'QUIET-TRACK®', type: 'Building Movement', notes: 'Metal-on-metal isolation' },
+    { item: 'Nogging Track', type: 'Double Punched', brand: 'Rondo 214/215/216' },
     { item: 'Husk Bolts / DynaBolts', type: 'Bottom track fixing', brand: 'Ramset/Hilti' },
   ];
 
