@@ -1,0 +1,58 @@
+// components/ArQuoteCanvas.js
+import React, { useRef, useEffect } from 'react';
+
+export default function ArQuoteCanvas({ arData }) {
+  const videoRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const snapAndSave = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    // 1. Draw Camera Feed
+    ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
+    
+    // 2. Glitch-Core Branding Overlay
+    ctx.fillStyle = "rgba(0, 255, 70, 0.2)"; // Neon Green Tint
+    ctx.fillRect(0, 0, canvas.width, 100);
+    
+    ctx.fillStyle = "#fff";
+    ctx.font = "bold 40px 'Courier New'";
+    ctx.fillText("SITE FOREMAN AI // QUOTE", 50, 65);
+    
+    // 3. Dynamic Data from AR/Estimator
+    ctx.fillStyle = "#000";
+    ctx.fillRect(50, 150, 400, 200);
+    ctx.strokeStyle = "#00FF46";
+    ctx.strokeRect(50, 150, 400, 200);
+    
+    ctx.fillStyle = "#00FF46";
+    ctx.font = "24px monospace";
+    ctx.fillText(`MEASURED: ${arData.length}m`, 70, 200);
+    ctx.fillText(`EST: $${arData.price}`, 70, 240);
+    ctx.fillText(`LOC: WEST VIC`, 70, 280);
+
+    // Save to device or send to Leah/Client
+    const dataUrl = canvas.toDataURL("image/png");
+    const link = document.createElement('a');
+    link.download = `quote-${Date.now()}.png`;
+    link.href = dataUrl;
+    link.click();
+  };
+
+  return (
+    <div className="relative h-screen w-full bg-black overflow-hidden">
+      <video ref={videoRef} className="absolute inset-0 h-full w-full object-cover" autoPlay playsInline />
+      <canvas ref={canvasRef} width={1080} height={1920} className="hidden" />
+      
+      <div className="absolute bottom-10 w-full flex justify-center">
+        <button 
+          onClick={snapAndSave}
+          className="bg-green-500 text-black px-8 py-4 rounded-full font-black uppercase tracking-tighter hover:bg-white transition-all"
+        >
+          GENERATE LIVE QUOTE
+        </button>
+      </div>
+    </div>
+  );
+}
