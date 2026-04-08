@@ -132,6 +132,17 @@ Estimated Cost: $${totalLaborCost.toLocaleString(undefined, { minimumFractionDig
         </div>
       </div>
 
+      <div class="estimator-extras">
+  <label for="project-notes">Quote Notes & Terms:</label>
+  <textarea id="project-notes" placeholder="Enter custom terms, scope of work, or exclusions here..."></textarea>
+  
+  <div class="total-display">
+    <h3>Total Estimate: $<span id="final-total">0.00</span></h3>
+  </div>
+
+  <button onclick="window.print()" class="print-btn">Generate Print Quote</button>
+</div>
+      
       <div className="card">
         <h3>{mode === 'wall' ? 'Wall' : 'Ceiling'} Specifications</h3>
         <div className="column gap-4 flex">
